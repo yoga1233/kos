@@ -27,7 +27,6 @@ class GoogleAuthService {
         name: userGoogle.displayName.toString(),
         email: userGoogle.email.toString(),
       );
-      print(user);
       return user;
     } catch (e) {
       rethrow;

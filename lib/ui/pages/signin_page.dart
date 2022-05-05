@@ -41,36 +41,61 @@ class SignInPage extends StatelessWidget {
     }
 
     Widget googleSignIn() {
-      return InkWell(
-        onTap: () {},
-        child: Container(
-          margin: const EdgeInsets.only(left: 24, right: 24, top: 30),
-          width: double.infinity,
-          height: 50,
-          decoration: BoxDecoration(
-              border: Border.all(color: const Color(0xffDBD7EC)),
-              borderRadius: BorderRadius.circular(17)),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                margin: const EdgeInsets.only(right: 10),
-                height: 24,
-                width: 24,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/icon_google_login.png'),
-                    fit: BoxFit.cover,
-                  ),
+      return BlocConsumer<GoogleAuthCubit, GoogleAuthState>(
+        listener: (context, state) {
+          if (state is GoogleAuthFailled) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                backgroundColor: Colors.blueAccent, content: Text(state.eror)));
+          } else if (state is GoogleAuthSuccess) {
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const MainPage(),
                 ),
+                (route) => false);
+          }
+        },
+        builder: (context, state) {
+          if (state is GoogleAuthLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return InkWell(
+            onTap: () {
+              context.read<GoogleAuthCubit>().signIn();
+            },
+            child: Container(
+              margin: const EdgeInsets.only(left: 24, right: 24, top: 30),
+              width: double.infinity,
+              height: 50,
+              decoration: BoxDecoration(
+                  border: Border.all(color: const Color(0xffDBD7EC)),
+                  borderRadius: BorderRadius.circular(17)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(right: 10),
+                    height: 24,
+                    width: 24,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/icon_google_login.png'),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    'Continue With Google',
+                    style: greyTextStyle.copyWith(
+                        fontSize: 16, fontWeight: medium),
+                  )
+                ],
               ),
-              Text(
-                'SignIn With Google',
-                style: greyTextStyle.copyWith(fontSize: 16, fontWeight: medium),
-              )
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       );
     }
 
@@ -124,40 +149,15 @@ class SignInPage extends StatelessWidget {
               ],
             ),
           ),
-          BlocConsumer<GoogleAuthCubit, GoogleAuthState>(
-            listener: (context, state) {
-              if (state is GoogleAuthFailled) {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    backgroundColor: Colors.blueAccent,
-                    content: Text(state.eror)));
-              } else if (state is GoogleAuthSuccess) {
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const MainPage(),
-                    ),
-                    (route) => false);
-              }
-            },
-            builder: (context, state) {
-              if (state is GoogleAuthLoading) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              return CustomButton(
-                  width: double.infinity,
-                  text: 'SignIn',
-                  edgeInsets: const EdgeInsets.only(
-                    top: 30,
-                    left: 24,
-                    right: 24,
-                  ),
-                  onTap: () {
-                    context.read<GoogleAuthCubit>().signIn();
-                  });
-            },
-          )
+          CustomButton(
+              width: double.infinity,
+              text: 'Login',
+              edgeInsets: const EdgeInsets.only(
+                top: 30,
+                left: 24,
+                right: 24,
+              ),
+              onTap: () {})
         ],
       );
     }

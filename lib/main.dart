@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kos/cubit/google_auth_cubit.dart';
 import 'package:kos/cubit/page_cubit.dart';
 import 'package:kos/cubit/space_cubit.dart';
+import 'package:kos/ui/pages/favorite_page.dart';
 import 'package:kos/ui/pages/signin_page.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
         )
       ],
       child: const MaterialApp(
-        home: SignInPage(),
+        home: FavoritePage(),
       ),
     );
   }

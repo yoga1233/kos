@@ -11,7 +11,12 @@ class GoogleAuthInitial extends GoogleAuthState {}
 
 class GoogleAuthLoading extends GoogleAuthState {}
 
-class GoogleAuthSuccess extends GoogleAuthState {}
+class GoogleAuthSuccess extends GoogleAuthState {
+  final List<GoogleAuthModel> user;
+  const GoogleAuthSuccess(this.user);
+  @override
+  List<Object> get props => [user];
+}
 
 class GoogleAuthFailled extends GoogleAuthState {
   final String eror;

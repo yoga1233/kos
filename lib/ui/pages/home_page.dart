@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kos/cubit/space_cubit.dart';
+import 'package:kos/model/google_auth_model.dart';
 import 'package:kos/model/space_model.dart';
 import 'package:kos/shared/theme.dart';
 import 'package:kos/ui/widget/city_card.dart';
@@ -26,15 +27,29 @@ class _HomePageState extends State<HomePage> {
     Widget header() {
       return Container(
         margin: const EdgeInsets.only(top: 24, left: 24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
           children: [
-            Text(
-              'Explore Now',
-              style: blackTextstyle.copyWith(fontSize: 24, fontWeight: medium),
-            ),
-            const SizedBox(
-              height: 2,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Explore Now',
+                    style: blackTextstyle.copyWith(
+                        fontSize: 24, fontWeight: medium),
+                  ),
+                  const SizedBox(
+                    height: 2,
+                  ),
+                  Text(
+                    'Mencari kosan yang cozy',
+                    style: greyTextStyle.copyWith(
+                      fontSize: 16,
+                      fontWeight: light,
+                    ),
+                  )
+                ],
+              ),
             ),
             Text(
               'Mencari kosan yang cozy',
