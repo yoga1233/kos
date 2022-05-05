@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kos/cubit/google_auth_cubit.dart';
 import 'package:kos/cubit/page_cubit.dart';
 import 'package:kos/cubit/space_cubit.dart';
 import 'package:kos/ui/pages/signin_page.dart';
-import 'package:kos/ui/pages/splash_page.dart';
 
-void main() {
+import 'package:firebase_core/firebase_core.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -21,6 +25,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => SpaceCubit(),
+        ),
+        BlocProvider(
+          create: (context) => GoogleAuthCubit(),
         )
       ],
       child: const MaterialApp(

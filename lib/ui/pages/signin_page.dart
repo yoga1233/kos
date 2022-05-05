@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kos/cubit/google_auth_cubit.dart';
 import 'package:kos/shared/theme.dart';
+import 'package:kos/ui/pages/main_page.dart';
 import 'package:kos/ui/widget/custom_button.dart';
 import 'package:kos/ui/widget/custom_text_form_field.dart';
 
@@ -121,15 +124,40 @@ class SignInPage extends StatelessWidget {
               ],
             ),
           ),
-          CustomButton(
-              width: double.infinity,
-              text: 'SignIn',
-              edgeInsets: const EdgeInsets.only(
-                top: 30,
-                left: 24,
-                right: 24,
-              ),
-              onTap: () {})
+          BlocConsumer<GoogleAuthCubit, GoogleAuthState>(
+            listener: (context, state) {
+              if (state is GoogleAuthFailled) {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    backgroundColor: Colors.blueAccent,
+                    content: Text(state.eror)));
+              } else if (state is GoogleAuthSuccess) {
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MainPage(),
+                    ),
+                    (route) => false);
+              }
+            },
+            builder: (context, state) {
+              if (state is GoogleAuthLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              return CustomButton(
+                  width: double.infinity,
+                  text: 'SignIn',
+                  edgeInsets: const EdgeInsets.only(
+                    top: 30,
+                    left: 24,
+                    right: 24,
+                  ),
+                  onTap: () {
+                    context.read<GoogleAuthCubit>().signIn();
+                  });
+            },
+          )
         ],
       );
     }

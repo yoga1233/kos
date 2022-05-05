@@ -200,7 +200,6 @@ class _DetailPageState extends State<DetailPage> {
     }
 
     Widget backAndFav() {
-      print(widget.space.mapUrl);
       return Container(
         margin: const EdgeInsets.only(
           top: 50,
