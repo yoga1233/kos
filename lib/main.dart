@@ -7,6 +7,7 @@ import 'package:kos/ui/pages/favorite_page.dart';
 import 'package:kos/ui/pages/signin_page.dart';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:kos/ui/pages/splash_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,8 +32,8 @@ class MyApp extends StatelessWidget {
           create: (context) => GoogleAuthCubit(),
         )
       ],
-      child: const MaterialApp(
-        home: FavoritePage(),
+      child: MaterialApp(
+        home: SplashPage(),
       ),
     );
   }

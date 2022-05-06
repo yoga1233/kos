@@ -12,6 +12,7 @@ class GoogleAuthCubit extends Cubit<GoogleAuthState> {
     try {
       emit(GoogleAuthLoading());
       List<GoogleAuthModel> user = await GoogleAuthService().googleLogin();
+      print(user);
       emit(GoogleAuthSuccess(user));
     } catch (e) {
       emit(GoogleAuthFailled(e.toString()));

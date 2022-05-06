@@ -27,6 +27,7 @@ class GoogleAuthService {
         name: userGoogle.displayName.toString(),
         email: userGoogle.email.toString(),
       );
+      print(user);
       return user;
     } catch (e) {
       rethrow;
@@ -35,7 +36,7 @@ class GoogleAuthService {
 
   Future gogleSignOut() async {
     try {
-      googleSignIn.signOut();
+      GoogleSignIn().signOut();
     } catch (e) {
       rethrow;
     }

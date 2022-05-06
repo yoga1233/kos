@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart';
 import 'package:kos/cubit/google_auth_cubit.dart';
 import 'package:kos/ui/pages/signin_page.dart';
 import 'package:kos/ui/widget/custom_button.dart';
