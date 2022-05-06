@@ -43,7 +43,9 @@ class SignInPage extends StatelessWidget {
     Widget googleSignIn() {
       return BlocConsumer<GoogleAuthCubit, GoogleAuthState>(
         listener: (context, state) {
+          print('state saat ini $state');
           if (state is GoogleAuthFailled) {
+            print(state.eror);
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 backgroundColor: Colors.blueAccent, content: Text(state.eror)));
           } else if (state is GoogleAuthSuccess) {

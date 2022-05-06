@@ -11,9 +11,8 @@ class GoogleAuthCubit extends Cubit<GoogleAuthState> {
   Future signIn() async {
     try {
       emit(GoogleAuthLoading());
-      List<GoogleAuthModel> user = await GoogleAuthService().googleLogin();
-      print(user);
-      emit(GoogleAuthSuccess(user));
+      await GoogleAuthService().googleLogin();
+      emit(GoogleAuthSuccess());
     } catch (e) {
       emit(GoogleAuthFailled(e.toString()));
     }
