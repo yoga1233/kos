@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kos/cubit/auth_cubit.dart';
 import 'package:kos/cubit/google_auth_cubit.dart';
 import 'package:kos/cubit/page_cubit.dart';
 import 'package:kos/cubit/space_cubit.dart';
@@ -30,6 +31,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => GoogleAuthCubit(),
+        ),
+        BlocProvider(
+          create: (context) => AuthCubit(),
         )
       ],
       child: MaterialApp(

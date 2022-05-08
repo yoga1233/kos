@@ -45,7 +45,7 @@ class SignInPage extends StatelessWidget {
         listener: (context, state) {
           print('state saat ini $state');
           if (state is GoogleAuthFailled) {
-            print(state.eror);
+            print('eror = ' + state.eror);
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 backgroundColor: Colors.blueAccent, content: Text(state.eror)));
           } else if (state is GoogleAuthSuccess) {
