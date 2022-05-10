@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kos/cubit/google_auth_cubit.dart';
-import 'package:kos/ui/pages/signin_page.dart';
+import 'package:kos/ui/pages/sign_in_page.dart';
 import 'package:kos/ui/widget/custom_button.dart';
 
+import '../../cubit/auth_cubit.dart';
 import '../../cubit/page_cubit.dart';
 
 class FavoritePage extends StatelessWidget {
@@ -15,14 +15,14 @@ class FavoritePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: whiteColor,
-      body: BlocConsumer<GoogleAuthCubit, GoogleAuthState>(
+      body: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
-          if (state is GoogleAuthFailled) {
+          if (state is AuthFailed) {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(state.eror),
+              content: Text(state.error),
               backgroundColor: Colors.amber,
             ));
-          } else if (state is GoogleAuthInitial) {
+          } else if (state is AuthInitial) {
             context.read<PageCubit>().setPage(0);
             Navigator.pushAndRemoveUntil(
                 context,
@@ -33,7 +33,7 @@ class FavoritePage extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          if (state is GoogleAuthLoading) {
+          if (state is AuthLoading) {
             return const Center(
               child: CircularProgressIndicator(),
             );
@@ -44,7 +44,7 @@ class FavoritePage extends StatelessWidget {
                 text: 'LogOut',
                 edgeInsets: const EdgeInsets.symmetric(horizontal: 24),
                 onTap: () {
-                  context.read<GoogleAuthCubit>().signOut();
+                  context.read<AuthCubit>().signOut();
                 }),
           );
         },

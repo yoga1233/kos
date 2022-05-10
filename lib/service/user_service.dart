@@ -35,7 +35,6 @@ class UserService {
 
       if (snapshot.exists) {
         getUserById(id);
-        print('check user by emai : ada data');
       } else {
         UserModel user = UserModel(
           id: id,
@@ -43,11 +42,9 @@ class UserService {
           name: name,
         );
         await setUser(user);
-        print('checkUsrByEmail : tidak ada data');
       }
       return true;
     } catch (e) {
-      print('Error check email by id $e');
       throw Exception('Error check email by id $e');
     }
   }

@@ -1,9 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart';
 import 'package:kos/cubit/auth_cubit.dart';
-import 'package:kos/cubit/google_auth_cubit.dart';
 import 'package:kos/cubit/space_cubit.dart';
 import 'package:kos/model/space_model.dart';
 import 'package:kos/shared/theme.dart';
@@ -22,7 +20,6 @@ class _HomePageState extends State<HomePage> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   @override
   void initState() {
-    context.read<AuthCubit>().getCurrentUser(auth.currentUser!.uid);
     context.read<SpaceCubit>().fetchSpace();
     super.initState();
   }
@@ -46,33 +43,25 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(
                     height: 2,
                   ),
-                  Text(
-                    'Mencari kosan yang cozy',
-                    style: greyTextStyle.copyWith(
-                      fontSize: 16,
-                      fontWeight: light,
-                    ),
+                  BlocBuilder<AuthCubit, AuthState>(
+                    builder: (context, state) {
+                      if (state is AuthSuccess) {
+                        return Text(
+                          state.user.name,
+                          style: blackTextstyle.copyWith(
+                            fontSize: 16,
+                            fontWeight: light,
+                          ),
+                        );
+                      }
+                      return const Center(
+                        child: CircularProgressIndicator.adaptive(),
+                      );
+                    },
                   )
                 ],
               ),
             ),
-            BlocBuilder<AuthCubit, AuthState>(
-              builder: (context, state) {
-                print('state auth pada home page = $state');
-                if (state is AuthSuccess) {
-                  return Text(
-                    state.user.name,
-                    style: blackTextstyle.copyWith(
-                      fontSize: 24,
-                      fontWeight: medium,
-                    ),
-                  );
-                }
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              },
-            )
           ],
         ),
       );
@@ -190,7 +179,7 @@ class _HomePageState extends State<HomePage> {
                   return recomendedSpace(state.space);
                 }
                 return const Center(
-                  child: CircularProgressIndicator(),
+                  child: LinearProgressIndicator(),
                 );
               },
             ),
@@ -199,36 +188,5 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
-
-    // return BlocConsumer<SpaceCubit, SpaceState>(
-    //   listener: (context, state) {
-    //     if (state is SpaceFailed) {
-    //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    //         content: Text(state.eror),
-    //         backgroundColor: Colors.amber,
-    //       ));
-    //     }
-    //   },
-    //   builder: (context, state) {
-    //     if (state is SpaceSuccess) {
-    //       return Scaffold(
-    //         backgroundColor: whiteColor,
-    //         body: SingleChildScrollView(
-    //           child: Column(
-    //             children: [
-    //               header(),
-    //               popularCities(),
-    //               recomendedSpace(state.space),
-    //               tips(),
-    //             ],
-    //           ),
-    //         ),
-    //       );
-    //     }
-    //     return const Center(
-    //       child: CircularProgressIndicator(),
-    //     );
-    //   },
-    // );
   }
 }

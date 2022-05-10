@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kos/cubit/google_auth_cubit.dart';
+import 'package:kos/cubit/auth_cubit.dart';
 import 'package:kos/shared/theme.dart';
 import 'package:kos/ui/pages/main_page.dart';
+import 'package:kos/ui/pages/sign_up_page.dart';
 import 'package:kos/ui/widget/custom_button.dart';
 import 'package:kos/ui/widget/custom_text_form_field.dart';
 
@@ -11,6 +12,11 @@ class SignInPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController emailController =
+        TextEditingController(text: '');
+    final TextEditingController passwordController =
+        TextEditingController(text: '');
+
     Widget header() {
       return Column(
         children: [
@@ -35,20 +41,22 @@ class SignInPage extends StatelessWidget {
               fontSize: 14,
               fontWeight: light,
             ),
-          )
+          ),
+          const SizedBox(
+            height: 30,
+          ),
         ],
       );
     }
 
     Widget googleSignIn() {
-      return BlocConsumer<GoogleAuthCubit, GoogleAuthState>(
+      return BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
-          print('state saat ini $state');
-          if (state is GoogleAuthFailled) {
-            print('eror = ' + state.eror);
+          if (state is AuthFailed) {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                backgroundColor: Colors.blueAccent, content: Text(state.eror)));
-          } else if (state is GoogleAuthSuccess) {
+                backgroundColor: Colors.blueAccent,
+                content: Text(state.error)));
+          } else if (state is AuthSuccess) {
             Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
@@ -58,17 +66,16 @@ class SignInPage extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          if (state is GoogleAuthLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
+          if (state is AuthLoading) {}
           return InkWell(
             onTap: () {
-              context.read<GoogleAuthCubit>().signIn();
+              context.read<AuthCubit>().signInGoogle(context: context);
             },
             child: Container(
-              margin: const EdgeInsets.only(left: 24, right: 24, top: 30),
+              margin: const EdgeInsets.only(
+                left: 24,
+                right: 24,
+              ),
               width: double.infinity,
               height: 50,
               decoration: BoxDecoration(
@@ -114,9 +121,13 @@ class SignInPage extends StatelessWidget {
     Widget inputSection() {
       return Column(
         children: [
-          const CustomTextFormField(
-              hintText: 'Your email address', labelText: 'Email'),
-          const CustomTextFormField(
+          CustomTextFormField(
+            controller: emailController,
+            hintText: 'Your email address',
+            labelText: 'Email',
+          ),
+          CustomTextFormField(
+            controller: passwordController,
             hintText: 'Your password',
             labelText: 'Password',
             obsecureText: true,
@@ -127,7 +138,13 @@ class SignInPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SignUpPage(),
+                        ));
+                  },
                   child: Text(
                     'Dont have an account?',
                     style: greyTextStyle.copyWith(
@@ -151,7 +168,30 @@ class SignInPage extends StatelessWidget {
               ],
             ),
           ),
-          CustomButton(
+        ],
+      );
+    }
+
+    Widget loginButton() {
+      return BlocConsumer<AuthCubit, AuthState>(
+        listener: (context, state) {
+          if (state is AuthSuccess) {
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const MainPage(),
+                ),
+                (route) => false);
+          }
+          if (state is AuthFailed) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                backgroundColor: Colors.blueAccent,
+                content: Text(state.error)));
+          }
+        },
+        builder: (context, state) {
+          if (state is AuthLoading) {}
+          return CustomButton(
               width: double.infinity,
               text: 'Login',
               edgeInsets: const EdgeInsets.only(
@@ -159,8 +199,12 @@ class SignInPage extends StatelessWidget {
                 left: 24,
                 right: 24,
               ),
-              onTap: () {})
-        ],
+              onTap: () {
+                context.read<AuthCubit>().signIn(
+                    email: emailController.text,
+                    password: passwordController.text);
+              });
+        },
       );
     }
 
@@ -168,7 +212,13 @@ class SignInPage extends StatelessWidget {
       backgroundColor: whiteColor,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [header(), googleSignIn(), or(), inputSection()],
+        children: [
+          header(),
+          googleSignIn(),
+          or(),
+          inputSection(),
+          loginButton(),
+        ],
       ),
     );
   }
