@@ -5,6 +5,7 @@ import 'package:kos/ui/pages/card_page.dart';
 import 'package:kos/ui/pages/email_page.dart';
 import 'package:kos/ui/pages/favorite_page.dart';
 import 'package:kos/ui/pages/home_page.dart';
+import 'package:kos/ui/pages/profile_page.dart';
 import 'package:kos/ui/widget/custom_bottom_navigation.dart';
 
 class MainPage extends StatelessWidget {
@@ -22,6 +23,8 @@ class MainPage extends StatelessWidget {
           return const CardPage();
         case 3:
           return const FavoritePage();
+        case 4:
+          return const ProfilePage();
 
         default:
           return const HomePage();
@@ -47,13 +50,25 @@ class MainPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: const [
                 CustomBottomNavigation(
-                    imageUrl: 'assets/icon_home.png', index: 0),
+                  imageUrl: 'assets/icon_home.png',
+                  index: 0,
+                ),
                 CustomBottomNavigation(
-                    imageUrl: 'assets/icon_email.png', index: 1),
+                  imageUrl: 'assets/icon_email.png',
+                  index: 1,
+                ),
                 CustomBottomNavigation(
-                    imageUrl: 'assets/icon_card.png', index: 2),
+                  imageUrl: 'assets/icon_card.png',
+                  index: 2,
+                ),
                 CustomBottomNavigation(
-                    imageUrl: 'assets/icon_love.png', index: 3),
+                  imageUrl: 'assets/icon_love.png',
+                  index: 3,
+                ),
+                CustomBottomNavigation(
+                  imageUrl: 'assets/icon_profile.png',
+                  index: 4,
+                )
               ],
             )),
       );

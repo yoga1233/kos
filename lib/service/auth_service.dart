@@ -32,7 +32,7 @@ class AuthService {
         throw 'Pastikan semua form terisi ';
       }
       print(e);
-      throw e;
+      rethrow;
     }
   }
 
