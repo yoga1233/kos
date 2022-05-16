@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:kos/model/user_model.dart';
@@ -35,8 +36,12 @@ class GoogleAuthService {
         userGoogle.uid,
       );
       return user;
-    } catch (e) {
-      rethrow;
+    } on PlatformException catch (err) {
+      if (err.code == 'sign_in_canceled') {
+        print(err.toString());
+      } else {
+        throw 'tidak jadi login';
+      }
     }
   }
 
