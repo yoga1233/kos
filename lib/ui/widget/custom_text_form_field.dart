@@ -23,7 +23,6 @@ class CustomTextFormField extends StatelessWidget {
       margin: const EdgeInsets.only(
         left: 24,
         right: 24,
-        bottom: 10,
       ),
       child: TextFormField(
         controller: controller,
