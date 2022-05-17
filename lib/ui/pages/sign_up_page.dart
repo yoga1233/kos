@@ -88,6 +88,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   setState(() {
                     eror = true;
                     print(eror);
+                    //NOTE : test
                   });
                 },
                 controller: passwordController)
