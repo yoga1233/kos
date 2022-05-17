@@ -27,6 +27,12 @@ class CustomTextFormField extends StatelessWidget {
       child: TextFormField(
         controller: controller,
         obscureText: obsecureText,
+        validator: (controller) {
+          if (controller == null || controller.isEmpty) {
+            return 'Please enter some text';
+          }
+          return null;
+        },
         decoration: InputDecoration(
           helperText: helperText,
           hintText: hintText,

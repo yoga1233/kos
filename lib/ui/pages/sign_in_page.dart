@@ -183,7 +183,8 @@ class SignInPage extends StatelessWidget {
                 ),
                 (route) => false);
           }
-          if (state is AuthFailed) {
+          if (state is AuthFailedSignIn) {
+            print('eror sign in');
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 backgroundColor: Colors.blueAccent,
                 content: Text(state.error)));

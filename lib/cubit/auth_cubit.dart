@@ -53,7 +53,7 @@ class AuthCubit extends Cubit<AuthState> {
 
       emit(AuthSuccess(user));
     } catch (e) {
-      emit(AuthFailed(e.toString()));
+      emit(AuthFailedSignIn(e.toString()));
     }
   }
 
@@ -64,7 +64,7 @@ class AuthCubit extends Cubit<AuthState> {
       await GoogleAuthService().gogleSignOut();
       emit(AuthInitial());
     } catch (e) {
-      emit(AuthFailed(e.toString()));
+      emit(AuthFailedSignUp(e.toString()));
     }
   }
 

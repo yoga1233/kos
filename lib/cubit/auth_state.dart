@@ -24,3 +24,17 @@ class AuthFailed extends AuthState {
   @override
   List<Object> get props => [error];
 }
+
+class AuthFailedSignIn extends AuthState {
+  final String error;
+  const AuthFailedSignIn(this.error);
+  @override
+  List<Object> get props => [error];
+}
+
+class AuthFailedSignUp extends AuthState {
+  final String error;
+  const AuthFailedSignUp(this.error);
+  @override
+  List<Object> get props => [error];
+}

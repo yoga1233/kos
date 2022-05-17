@@ -29,7 +29,7 @@ class AuthService {
         throw 'Email sudah pernah digunakan';
       }
       if (e.message == 'Given String is empty or null') {
-        throw 'Pastikan semua form terisi ';
+        throw 'Pastikan semua form terisi';
       }
       print(e);
       rethrow;
@@ -65,7 +65,7 @@ class AuthService {
           'The password is invalid or the user does not have a password.') {
         throw 'Password salah';
       } else if (e.message == "Given String is empty or null") {
-        throw 'Fill given form.';
+        throw 'Pastikan semua form terisi';
       } else {
         throw 'Error tidak diketahui ${e.message}';
       }
