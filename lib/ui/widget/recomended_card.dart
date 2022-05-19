@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kos/model/space_model.dart';
 import 'package:kos/ui/pages/detail_page.dart';
@@ -13,12 +14,14 @@ class RecomendedCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseAuth auth = FirebaseAuth.instance;
     return InkWell(
       onTap: () {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => DetailPage(space),
+              builder: (context) =>
+                  DetailPage(space, auth.currentUser!.displayName.toString()),
             ));
       },
       child: Row(

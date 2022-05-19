@@ -9,8 +9,9 @@ import 'package:url_launcher/url_launcher.dart';
 import '../widget/rating_item.dart';
 
 class DetailPage extends StatefulWidget {
+  final String user;
   final SpaceModel space;
-  const DetailPage(this.space, {Key? key}) : super(key: key);
+  const DetailPage(this.space, this.user, {Key? key}) : super(key: key);
 
   @override
   State<DetailPage> createState() => _DetailPageState();

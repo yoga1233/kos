@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kos/cubit/auth_cubit.dart';
+import 'package:kos/cubit/favorite_cubit.dart';
 import 'package:kos/cubit/page_cubit.dart';
 import 'package:kos/cubit/space_cubit.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -27,7 +28,10 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => AuthCubit(),
-        )
+        ),
+        BlocProvider(
+          create: (context) => FavoriteCubit(),
+        ),
       ],
       child: const MaterialApp(
         home: SplashPage(),

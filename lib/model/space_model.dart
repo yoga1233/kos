@@ -49,7 +49,22 @@ class SpaceModel extends Equatable {
         numberOfBedrooms: json['number_of_bedrooms'],
         numberOfCupboards: json['number_of_cupboards'],
       );
-
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'city': city,
+        'country': country,
+        'price': price,
+        'imageUrl': imageUrl,
+        'rating': rating,
+        'address': address,
+        'phone': phone,
+        'mapUrl': mapUrl,
+        'photos': photos,
+        'number_of_kitchens': numberOfKitchens,
+        'number_of_bedrooms': numberOfBedrooms,
+        'number_of_cupboards': numberOfCupboards,
+      };
   @override
   List<Object?> get props => [
         id,
